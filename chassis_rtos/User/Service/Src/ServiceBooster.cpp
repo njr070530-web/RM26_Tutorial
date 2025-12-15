@@ -87,7 +87,7 @@ void ServiceBooster()
 
     tx_semaphore_create(&my_semaphore1, TX_NAME("my_semaphore1"), 0);
     tx_semaphore_create(&RemoterThreadSem, TX_NAME("RemoterThreadSem"), 0);
-    tx_semaphore_create(&IMUThreadSem, TX_NAME("IMUThreadSem"), 0);
+    tx_semaphore_create(&IMUThreadSem, TX_NAME("IMUThreadSem"), 0);//创建三个信号量意欲何为，固定顺序吧
 
     /* Create my_thread! */
     tx_thread_create(&my_thread1, TX_NAME("my_thread1"),

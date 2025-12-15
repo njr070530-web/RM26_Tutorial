@@ -12,6 +12,9 @@ TX_SEMAPHORE RemoterThreadSem;
 uint8_t dr16_rx[DR16_DATA_SIZE];
 uint8_t vt03_rx[VT03_DATA_SIZE];
 
+om_topic_t *remoter_topic;
+
+// msg_remoter_t msg_remoter_debug_0;
 inline dr16_data_t& Dr16_Data()
 {
     return *reinterpret_cast<dr16_data_t*>(dr16_rx);
@@ -26,7 +29,7 @@ inline vt03_data_t& Vt03_Data()
     UNUSED(initial_input);
 
     /* Remoter Topic */
-    om_topic_t *remoter_topic = om_config_topic(nullptr, "ca", "remoter", sizeof(msg_remoter_t));
+    remoter_topic = om_config_topic(nullptr, "ca", "remoter", sizeof(msg_remoter_t));
     msg_remoter_t msg_remoter{};
     for (;;) {
         msg_remoter.offline = false;

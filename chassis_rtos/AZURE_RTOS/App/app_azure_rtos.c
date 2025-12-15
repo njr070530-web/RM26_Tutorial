@@ -99,8 +99,10 @@ VOID tx_application_define(VOID *first_unused_memory)
     }
 
     /* USER CODE BEGIN  App_ThreadX_Init_Success */
-    ServiceBooster();
-    TaskBooster();
+    ServiceBooster();//创建两个池，四个线程1，2，remotor，motor
+    TaskBooster();//创建线程云台
+    //imu、电机、遥控器接口，实现方法，遥控器线程收遥控器数据，发布，一个线程收imu数据，发布，
+    //pid线程订阅这两，进行计算，再发布给motor线程
     /* USER CODE END  App_ThreadX_Init_Success */
 
   }

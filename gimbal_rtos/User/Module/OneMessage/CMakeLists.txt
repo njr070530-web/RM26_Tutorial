@@ -12,8 +12,11 @@ target_sources(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_SOURCES})
 
 target_include_directories(
   ${PROJECT_NAME}
+  PUBLIC ${CMAKE_SOURCE_DIR}/Middlewares/ST/threadx/common/inc/
+  PUBLIC ${CMAKE_SOURCE_DIR}/Middlewares/ST/threadx/ports/cortex_m4/gnu/inc/
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/app
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/comp
-  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../config)
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../config
+)

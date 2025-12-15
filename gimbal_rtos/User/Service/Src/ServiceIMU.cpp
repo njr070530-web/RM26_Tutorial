@@ -16,6 +16,7 @@ TX_THREAD IMUThread;
 uint8_t IMUThreadStack[4096] = {0};
 TX_SEMAPHORE IMUThreadSem;
 ULONG IMU_time;
+om_topic_t *ins_topic;//
 
 static float last_yaw = 0.0f;
 static float yaw_corr = 0.0f;
@@ -37,7 +38,7 @@ static void InitQuaternion(float *init_q4)
         DWT_Delay(0.001);
     }
     for (uint8_t i = 0; i < 3; ++i)
-        acc_init[i] /= 100;
+        acc_init[i] /= 100;//得到瞬时初始值
     Norm3d(acc_init);
     // 计算原始加速度矢量和导航系重力加速度矢量的夹角
     float angle = acosf(Dot3d(acc_init, gravity_norm));
@@ -54,7 +55,7 @@ float debug_yaw_int = 0.0f;
     UNUSED(initial_input);
 
     /* INS Topic */
-    om_topic_t *ins_topic = om_config_topic(nullptr, "ca", "ins", sizeof(msg_ins_t));
+    ins_topic = om_config_topic(nullptr, "ca", "ins", sizeof(msg_ins_t));//
     msg_ins_t msg_ins{};
 
     imu_handler->self_test.ACC_CHIP_ID_ERR = true;       // 加速度计ID错误则为true
@@ -69,11 +70,11 @@ float debug_yaw_int = 0.0f;
 
     imu_handler->VerifyAccChipID();  //< 验证加速度计ID
     imu_handler->VerifyGyroChipID(); //< 验证陀螺仪ID
-
-    while (imu_handler->acc_data.temperature < 45.0f) {
-        tx_thread_sleep(10);
-    }
-    tx_thread_sleep(500);
+    imu_handler->ReadAccTemperature(&imu_handler->acc_data.temperature);
+    // while (imu_handler->acc_data.temperature < 45.0f) {
+    //     tx_thread_sleep(10);
+    // }
+    // tx_thread_sleep(500);
 
     imu_handler->Calibrate(); //< 标定IMU
     imu_handler->self_test.INIT_ERR = false;

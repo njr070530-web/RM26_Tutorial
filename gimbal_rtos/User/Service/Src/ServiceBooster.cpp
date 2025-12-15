@@ -32,6 +32,14 @@ extern TX_THREAD MotorThread;
 extern uint8_t MotorThreadStack[4096];
 extern void MotorThreadFun(ULONG initial_input);
 
+extern TX_THREAD GimbalThread;
+extern uint8_t GimbalThreadStack[4096];
+extern void GimbalThreadFun(ULONG initial_input);
+
+// extern TX_THREAD ShooterThread;
+// extern uint8_t ShooterThreadStack[4096];
+// extern void ShooterThreadFun(ULONG initial_input);
+
 /*EKF pool*/
 TX_BYTE_POOL MathPool;
 UCHAR Math_PoolBuf[14336] = {0};
@@ -102,15 +110,23 @@ void ServiceBooster()
         RemoterThreadFun, 0x1234, RemoterThreadStack, sizeof(RemoterThreadStack),
         4, 4, TX_NO_TIME_SLICE, TX_AUTO_START);
 
-    // tx_thread_create(&IMUThread, TX_NAME("IMUThread"),
-    //     IMUThreadFun, 0x1234, IMUThreadStack, sizeof(IMUThreadStack),
-    //     2, 2, TX_NO_TIME_SLICE, TX_AUTO_START);
-    //
-    // tx_thread_create(&IMUTempThread, TX_NAME("IMUTempThread"),
-    //     IMUTempThreadFun, 0x1234, IMUTempThreadStack, sizeof(IMUTempThreadStack),
-    //     5, 5, TX_NO_TIME_SLICE, TX_AUTO_START);
+    tx_thread_create(&IMUThread, TX_NAME("IMUThread"),
+        IMUThreadFun, 0x1234, IMUThreadStack, sizeof(IMUThreadStack),
+        3, 3, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+    tx_thread_create(&IMUTempThread, TX_NAME("IMUTempThread"),
+        IMUTempThreadFun, 0x1234, IMUTempThreadStack, sizeof(IMUTempThreadStack),
+        5, 5, TX_NO_TIME_SLICE, TX_AUTO_START);
 
     tx_thread_create(&MotorThread, TX_NAME("MotorThread"),
         MotorThreadFun, 0x1234, MotorThreadStack, sizeof(MotorThreadStack),
-        2, 2, TX_NO_TIME_SLICE, TX_AUTO_START);
+        5, 5, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+    tx_thread_create(&GimbalThread, TX_NAME("GimbalThread"),
+        GimbalThreadFun, 0x1234, GimbalThreadStack, sizeof(GimbalThreadStack),
+        7, 7, TX_NO_TIME_SLICE, TX_AUTO_START);
+
+    // tx_thread_create(&ShooterThread, TX_NAME("ShooterThread"),
+    //     ShooterThreadFun, 0x1234, ShooterThreadStack, sizeof(ShooterThreadStack),
+    //     6, 6, TX_NO_TIME_SLICE, TX_AUTO_START);
 }
