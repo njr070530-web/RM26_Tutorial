@@ -4,6 +4,14 @@
 
 #ifndef MAGICMSG_HPP
 #define MAGICMSG_HPP
+#include <stdint.h>
+#ifndef __PACKED_STRUCT
+#if defined(__GNUC__) || defined(__clang__)
+#define __PACKED_STRUCT struct __attribute__((packed))
+#else
+#define __PACKED_STRUCT struct
+#endif
+#endif
 
 #ifdef __cplusplus
 extern "C" {

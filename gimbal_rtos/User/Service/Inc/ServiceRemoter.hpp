@@ -3,6 +3,8 @@
 #define SERVICE_REMOTER_H
 #include "tx_api.h"
 #include "main.h"
+#include "om.h"
+extern om_topic_t *remoter_topic;
 
 /**
  * @def RC_CH_VALUE_MIN

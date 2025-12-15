@@ -13,6 +13,7 @@
 #include "AHRS.hpp"
 #include "BMI088.hpp"
 #include "QuaternionEKF.h"
+extern om_topic_t *ins_topic;
 
 
 #endif //RM26_H7_SERVICEIMU_HPP
